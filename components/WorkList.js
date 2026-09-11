@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/Providers";
+import Image from "next/image"; // 👈 Nueva importación necesaria
 
 export default function WorkList() {
   const { t } = useLanguage();
@@ -18,8 +19,17 @@ export default function WorkList() {
             href={item.href}
             className="group grid items-center gap-5 py-7 sm:grid-cols-[96px_1fr_auto]"
           >
-            {/* Placeholder de miniatura: sustitúyela por una captura real */}
-            <div className="h-16 w-24 shrink-0 rounded-2xl border border-line bg-gradient-to-br from-accent/20 to-signal/20 transition-transform duration-300 ease-spring group-hover:scale-[1.04] dark:border-line-dark" />
+            {/* Contenedor de la imagen que mantiene tus animaciones */}
+            <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-2xl border border-line transition-transform duration-300 ease-spring group-hover:scale-[1.04] dark:border-line-dark bg-paper dark:bg-ink-800">
+              {item.image && (
+                <Image
+                  src={item.image}
+                  alt={`Logo de ${item.title}`}
+                  fill
+                  className="object-cover" // Asegura que la imagen llene el hueco sin deformarse
+                />
+              )}
+            </div>
 
             <div>
               <h3 className="font-display text-xl text-ink dark:text-paper">
