@@ -24,9 +24,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "Tu Nombre — Desarrollador & Ciberseguridad",
+  title: "Enzo Espiño - Portfolio",
   description:
-    "Portfolio de Tu Nombre: proyectos de desarrollo y aprendizaje en ciberseguridad.",
+    "Full Stack Web Programmer",
 };
 
 const themeInitScript = `
