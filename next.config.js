@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Genera un sitio 100% estático en /out, listo para GitHub Pages.
-  output: "export",
-  images: { unoptimized: true },
-
-  // Si publicas en https://tu-usuario.github.io/nombre-repo (repo que NO
-  // se llama tu-usuario.github.io), descomenta y ajusta esto:
-  // basePath: "/nombre-repo",
-  // assetPrefix: "/nombre-repo/",
+  output: 'export',
+  basePath: '/portfolio', // El nombre de tu repositorio
+  images: {
+    unoptimized: true, // Requerido porque GitHub Pages no soporta optimización dinámica
+  },
 };
 
 module.exports = nextConfig;
