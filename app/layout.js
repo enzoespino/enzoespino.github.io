@@ -24,9 +24,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "Enzo Espiño - Portfolio",
+  title: "Enzo Espiño",
   description:
-    "Full Stack Web Programmer",
+    "Enzo Espiño - Portfolio. Full Stack Web Programmer",
 };
 
 const themeInitScript = `
