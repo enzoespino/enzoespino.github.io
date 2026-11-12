@@ -43,6 +43,15 @@ export function Providers({ children }) {
     window.localStorage.setItem("lang", lang);
   }, [lang, mounted]);
 
+  // Actualiza título y descripción de la pestaña según el idioma.
+  useEffect(() => {
+    if (!mounted) return;
+    const { title, description } = translations[lang].meta;
+    document.title = title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", description);
+  }, [lang, mounted]);
+
   const setLang = (next) => setLangState(next);
   const toggleTheme = () => setThemeState((t) => (t === "light" ? "dark" : "light"));
 

@@ -24,7 +24,9 @@ export default function Hero() {
               {h.ctaProjects}
             </a>
             <a
-              href="/cv.pdf"
+              href={h.cvHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="glass-panel rounded-full px-5 py-2.5 text-sm text-ink transition-transform duration-300 ease-spring hover:scale-[1.03] active:scale-95 dark:text-paper"
             >
               {h.ctaCv}
@@ -45,10 +47,6 @@ export default function Hero() {
             <div className="flex justify-between gap-4">
               <dt className="text-muted dark:text-muted-dark">{h.previouslyLabel}</dt>
               <dd className="text-right">{h.previouslyValue}</dd>
-            </div>
-            <div className="flex justify-between gap-4">
-              <dt className="text-muted dark:text-muted-dark">{h.statLabel}</dt>
-              <dd>{h.statValue}</dd>
             </div>
           </dl>
         </div>

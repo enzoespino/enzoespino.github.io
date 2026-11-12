@@ -1,6 +1,7 @@
 import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/context/Providers";
+import { translations } from "@/lib/i18n";
 import CursorGlow from "@/components/CursorGlow";
 
 const fraunces = Fraunces({
@@ -23,10 +24,31 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const siteUrl = "https://enzoespino.github.io";
+const { title, description } = translations.es.meta;
+
+// Valores por defecto (español). Al cambiar de idioma, Providers actualiza
+// el título y la descripción en el navegador.
 export const metadata = {
-  title: "Enzo Espiño",
-  description:
-    "Enzo Espiño - Portfolio. Full Stack Web Programmer",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: siteUrl,
+    siteName: "Enzo Espiño",
+    type: "website",
+    locale: "es_ES",
+    alternateLocale: ["en_US"],
+    images: [{ url: `${siteUrl}/og.png`, width: 1200, height: 630, alt: title }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [`${siteUrl}/og.png`],
+  },
 };
 
 const themeInitScript = `

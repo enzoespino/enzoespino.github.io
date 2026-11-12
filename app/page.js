@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import WorkList from "@/components/WorkList";
 import SideProjects from "@/components/SideProjects";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         <About />
         <WorkList />
         <SideProjects />
-        <Contact />
       </main>
       <Footer />
     </>
