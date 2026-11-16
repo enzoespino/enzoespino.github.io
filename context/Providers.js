@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { translations } from "@/lib/i18n";
+import { readPref, writePref } from "@/lib/storage";
 
 const LanguageContext = createContext(null);
 const ThemeContext = createContext(null);
@@ -13,8 +14,8 @@ export function Providers({ children }) {
 
   // Al montar: recupera preferencias guardadas (o detecta las del sistema).
   useEffect(() => {
-    const storedLang = window.localStorage.getItem("lang");
-    const storedTheme = window.localStorage.getItem("theme");
+    const storedLang = readPref("lang");
+    const storedTheme = readPref("theme");
 
     if (storedLang === "es" || storedLang === "en") {
       setLangState(storedLang);
@@ -33,14 +34,14 @@ export function Providers({ children }) {
   useEffect(() => {
     if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem("theme", theme);
+    writePref("theme", theme);
   }, [theme, mounted]);
 
   // Aplica el idioma al <html lang="..."> y lo persiste.
   useEffect(() => {
     if (!mounted) return;
     document.documentElement.lang = lang;
-    window.localStorage.setItem("lang", lang);
+    writePref("lang", lang);
   }, [lang, mounted]);
 
   // Actualiza título y descripción de la pestaña según el idioma.
@@ -52,12 +53,23 @@ export function Providers({ children }) {
     if (desc) desc.setAttribute("content", description);
   }, [lang, mounted]);
 
-  const setLang = (next) => setLangState(next);
-  const toggleTheme = () => setThemeState((t) => (t === "light" ? "dark" : "light"));
+  // Valores memorizados: los consumidores solo se renderizan cuando cambia algo real.
+  const langValue = useMemo(
+    () => ({ lang, setLang: setLangState, t: translations[lang] }),
+    [lang],
+  );
+  const themeValue = useMemo(
+    () => ({
+      theme,
+      mounted,
+      toggleTheme: () => setThemeState((t) => (t === "light" ? "dark" : "light")),
+    }),
+    [theme, mounted],
+  );
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] }}>
-      <ThemeContext.Provider value={{ theme, toggleTheme, mounted }}>
+    <LanguageContext.Provider value={langValue}>
+      <ThemeContext.Provider value={themeValue}>
         {children}
       </ThemeContext.Provider>
     </LanguageContext.Provider>

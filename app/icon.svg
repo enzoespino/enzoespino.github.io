@@ -1,5 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="800px" height="800px">
-  <polyline points="16 18 22 12 16 6"></polyline>
-  <polyline points="8 6 2 12 8 18"></polyline>
-  <line x1="14" y1="4" x2="10" y2="20"></line>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    .s { stroke: #1C232C; }
+    .a { stroke: #C94A2C; }
+    @media (prefers-color-scheme: dark) { .s { stroke: #C1C8D0; } .a { stroke: #E47456; } }
+  </style>
+  <polyline class="s" points="16 18 22 12 16 6"/>
+  <polyline class="s" points="8 6 2 12 8 18"/>
+  <line class="a" x1="14" y1="4" x2="10" y2="20"/>
 </svg>

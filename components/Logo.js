@@ -31,7 +31,7 @@ export default function Logo({ className = "" }) {
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        className="text-accent dark:text-accent-soft"
+        className="text-accent"
       />
     </svg>
   );
