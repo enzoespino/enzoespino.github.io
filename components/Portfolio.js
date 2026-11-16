@@ -5,13 +5,12 @@ import { useLanguage } from "@/context/Providers";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 import { readPref, writePref } from "@/lib/storage";
 import KoiPond from "./KoiPond";
-import CvButton from "./CvButton";
 import PondToggle from "./PondToggle";
-import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import LanguageToggle from "./LanguageToggle";
 import StatusCard from "./StatusCard";
 import Footer from "./Footer";
+import SectionBody from "./SectionBody";
 
 // Estructura: el inicio ocupa una pantalla y, debajo, se monta UNA sola sección
 // (la última elegida). Elegir otra sustituye a la anterior. Mientras no se
@@ -94,16 +93,7 @@ export default function Portfolio() {
       <div className="pond-veil" aria-hidden="true" />
 
       <header className="site-header">
-        <button
-          type="button"
-          onClick={goHome}
-          aria-label={t.nav.homeAria}
-          className="group chip flex h-9 w-9 items-center justify-center hover:scale-105 active:scale-90"
-        >
-          <Logo />
-        </button>
         <div className="flex items-center gap-2">
-          <CvButton />
           <PondToggle on={pondOn} onToggle={togglePond} />
           <LanguageToggle />
           <ThemeToggle />
@@ -150,7 +140,7 @@ export default function Portfolio() {
               >
                 {current.title}
               </h2>
-              <p className="section-text">{current.body}</p>
+              <SectionBody id={section} content={current} />
             </div>
           </section>
         )}

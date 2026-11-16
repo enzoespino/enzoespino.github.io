@@ -16,3 +16,12 @@ Ambas con licencia SIL Open Font License 1.1, instaladas como paquetes npm (no d
 - Zen Dots (titulares)
 - Chakra Petch (interfaz)
 - Share Tech Mono (ASCII y detalles)
+
+## Recursos (`public/media/`)
+
+Next solo sirve lo que está en `public/`, así que los recursos viven en `public/media/`:
+
+- `public/media/experience/`: logos de las empresas (`headissue.png`, `pangostudio.png`). Son provisionales: se sustituyen por los reales con el mismo nombre.
+- `public/media/cv/`: CV descargables (`esp.pdf`, `eng.pdf`). El botón de CV del footer descarga el del idioma activo.
+
+Valores por defecto: inglés y modo oscuro (si el visitante elige otra cosa, se recuerda).

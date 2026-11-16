@@ -8,11 +8,11 @@ const LanguageContext = createContext(null);
 const ThemeContext = createContext(null);
 
 export function Providers({ children }) {
-  const [lang, setLangState] = useState("es");
-  const [theme, setThemeState] = useState("light");
+  const [lang, setLangState] = useState("en");
+  const [theme, setThemeState] = useState("dark");
   const [mounted, setMounted] = useState(false);
 
-  // Al montar: recupera preferencias guardadas (o detecta las del sistema).
+  // Por defecto: inglés y modo oscuro. Al montar se recupera lo que el visitante eligió.
   useEffect(() => {
     const storedLang = readPref("lang");
     const storedTheme = readPref("theme");
@@ -23,8 +23,6 @@ export function Providers({ children }) {
 
     if (storedTheme === "light" || storedTheme === "dark") {
       setThemeState(storedTheme);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setThemeState("dark");
     }
 
     setMounted(true);

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/Providers";
 import ContactLinks from "./ContactLinks";
+import CvButton from "./CvButton";
 
 // Fecha del último commit, fijada al compilar (next.config.js).
 const LAST_UPDATE = process.env.NEXT_PUBLIC_LAST_UPDATE;
@@ -17,11 +18,12 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <span className="footer-note" suppressHydrationWarning>
-        © {year} Enzo Espiño — {t.footer.built} - {LAST_UPDATE}
+        © {year} Enzo Espiño — {t.footer.built} {LAST_UPDATE}
       </span>
       <div className="footer-contact">
         <span className="footer-contact-title">{t.footer.contactTitle}</span>
         <ContactLinks />
+        <CvButton />
       </div>
     </footer>
   );

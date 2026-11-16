@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/context/Providers";
 
-// Descarga el CV en el idioma activo (cv-es.pdf / cv-en.pdf en /public).
+// Descarga el CV en el idioma activo (public/media/cv/esp.pdf y eng.pdf).
 export default function CvButton() {
   const { t } = useLanguage();
   return (
