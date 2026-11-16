@@ -12,7 +12,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label={isDark ? t.theme.toLight : t.theme.toDark}
-      className="glass-panel relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-ink transition-transform duration-300 ease-spring hover:scale-105 active:scale-90 dark:text-paper"
+      className="chip relative flex h-9 w-9 items-center justify-center overflow-hidden hover:scale-105 active:scale-90"
     >
       <span className={mounted ? "relative h-4 w-4" : "invisible relative h-4 w-4"}>
         {/* Sol */}

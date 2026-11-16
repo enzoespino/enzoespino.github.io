@@ -1,57 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/Providers";
+import ContactLinks from "./ContactLinks";
+import CvButton from "./CvButton";
 
-const icons = {
-  email: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m3 7 9 6 9-6" />
-    </svg>
-  ),
-  github: (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
-      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.76 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
-    </svg>
-  ),
-  linkedin: (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
-    </svg>
-  ),
-};
+// Fecha del último commit, fijada al compilar (next.config.js).
+const LAST_UPDATE = process.env.NEXT_PUBLIC_LAST_UPDATE;
 
+// Fijo en la parte inferior: se ve igual en el inicio y en cualquier sección.
 export default function Footer() {
   const { t } = useLanguage();
+  // El año se corrige en el cliente, así cambia solo cada año sin necesidad de commits.
+  const [year, setYear] = useState(() => new Date().getFullYear());
+  useEffect(() => setYear(new Date().getFullYear()), []);
 
   return (
-    <footer id="contacto" className="border-t border-line dark:border-line-dark">
-      <div className="mx-auto flex max-w-content flex-col items-center gap-6 px-6 py-12">
-        <h2 className="font-display text-3xl text-ink dark:text-paper">
-          {t.contact.title}
-        </h2>
-
-        <nav aria-label={t.contact.title} className="flex items-center gap-3">
-          {t.contact.items.map((link) => {
-            const external = !link.href.startsWith("mailto:");
-            return (
-              <a
-                key={link.id}
-                href={link.href}
-                aria-label={link.label}
-                title={link.label}
-                {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="glass-panel flex h-11 w-11 items-center justify-center rounded-full text-muted transition-all duration-300 ease-spring hover:scale-110 hover:text-accent active:scale-95 dark:text-muted-dark dark:hover:text-accent-soft"
-              >
-                {icons[link.id]}
-              </a>
-            );
-          })}
-        </nav>
-
-        <span className="font-mono text-xs text-muted dark:text-muted-dark">
-          © {new Date().getFullYear()} Enzo Espiño — {t.footer.built}
-        </span>
+    <footer className="site-footer">
+      <span className="footer-note" suppressHydrationWarning>
+        © {year} Enzo Espiño — {t.footer.built} {LAST_UPDATE}
+      </span>
+      <div className="footer-contact">
+        <span className="footer-contact-title">{t.footer.contactTitle}</span>
+        <ContactLinks />
+        <CvButton />
       </div>
     </footer>
   );
