@@ -15,7 +15,7 @@ import SectionBody from "./SectionBody";
 // Estructura: el inicio ocupa una pantalla y, debajo, se monta UNA sola sección
 // (la última elegida). Elegir otra sustituye a la anterior. Mientras no se
 // elige ninguna, la página no tiene nada más abajo y no se puede desplazar.
-export default function Portfolio() {
+export default function Portfolio({ projectStats = {} }) {
   const { t } = useLanguage();
   const [section, setSection] = useState(null);
   const [pondOn, setPondOn] = useState(true);
@@ -140,7 +140,7 @@ export default function Portfolio() {
               >
                 {current.title}
               </h2>
-              <SectionBody id={section} content={current} />
+              <SectionBody id={section} content={current} projectStats={projectStats} />
             </div>
           </section>
         )}

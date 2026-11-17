@@ -383,6 +383,18 @@ body {
   font-size: 1.4rem;
   line-height: 1.2;
 }
+.entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.15rem 1rem;
+}
+.entry-period {
+  font-family: "Share Tech Mono", ui-monospace, monospace;
+  font-size: 0.9rem;
+  color: rgb(var(--muted));
+}
 .entry-role {
   margin-top: 0.2rem;
   color: rgb(var(--fg) / 0.85);
@@ -418,6 +430,44 @@ body {
   width: 0.5rem;
   height: 2px;
   background: rgb(var(--accent));
+}
+/* Línea de tiempo: raíl a la izquierda con un punto por puesto. El más reciente, en acento. */
+.timeline {
+  border-bottom: 0;
+}
+.timeline .entry {
+  position: relative;
+  padding: 0 0 2.75rem 2.5rem;
+  border-top: 0;
+}
+.timeline .entry:last-child {
+  padding-bottom: 0.5rem;
+}
+.timeline .entry::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.8rem;
+  bottom: -0.8rem;
+  width: 2px;
+  background: rgb(var(--fg) / 0.22);
+}
+.timeline .entry:last-child::before {
+  display: none;
+}
+.timeline .entry::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: rgb(var(--muted));
+}
+.timeline .entry:first-child::after {
+  background: rgb(var(--accent));
+  box-shadow: 0 0 0.7em rgb(var(--accent) / 0.6);
 }
 .tags {
   display: flex;
@@ -458,6 +508,9 @@ body {
     width: 2.75rem;
     height: 2.75rem;
   }
+  .timeline .entry {
+    padding-left: 1.75rem;
+  }
   .entry--plain {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -494,9 +547,30 @@ body {
   align-items: center;
   gap: 0.9rem;
 }
+/* Móvil: la fila de contacto arriba y la nota de copyright centrada debajo. */
+@media (max-width: 640px) {
+  .site-footer {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .footer-contact {
+    margin-left: 0;
+  }
+  .footer-note {
+    text-align: center;
+  }
+}
 .footer-contact-title {
   font-weight: 500;
   font-size: 1rem;
+}
+
+/* Fundido del cambio de tema (claro <-> oscuro). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: ease-in-out;
 }
 
 /* ---- Animaciones ---------------------------------------------------------- */

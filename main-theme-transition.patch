@@ -1,0 +1,80 @@
+From 8ad36cb3e8e97c130824c6231b07ffb4d0f7b5d9 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 17 Nov 2026 09:46:36 +0100
+Subject: [PATCH] =?UTF-8?q?Fundido=20r=C3=A1pido=20al=20cambiar=20entre=20?=
+ =?UTF-8?q?modo=20claro=20y=20oscuro?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HJadgZi19kXtucU1xtMq4v
+---
+ app/globals.css      |  7 +++++++
+ context/Providers.js | 25 +++++++++++++++++--------
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/app/globals.css b/app/globals.css
+index 420bbb0..cb94ab6 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -566,6 +566,13 @@ body {
+   font-size: 1rem;
+ }
+ 
++/* Fundido del cambio de tema (claro <-> oscuro). */
++::view-transition-old(root),
++::view-transition-new(root) {
++  animation-duration: 0.35s;
++  animation-timing-function: ease-in-out;
++}
++
+ /* ---- Animaciones ---------------------------------------------------------- */
+ @keyframes rise-in {
+   from {
+diff --git a/context/Providers.js b/context/Providers.js
+index 1d2927f..a908ebe 100644
+--- a/context/Providers.js
++++ b/context/Providers.js
+@@ -1,6 +1,7 @@
+ "use client";
+ 
+ import { createContext, useContext, useEffect, useMemo, useState } from "react";
++import { flushSync } from "react-dom";
+ import { translations } from "@/lib/i18n";
+ import { readPref, writePref } from "@/lib/storage";
+ 
+@@ -56,14 +57,22 @@ export function Providers({ children }) {
+     () => ({ lang, setLang: setLangState, t: translations[lang] }),
+     [lang],
+   );
+-  const themeValue = useMemo(
+-    () => ({
+-      theme,
+-      mounted,
+-      toggleTheme: () => setThemeState((t) => (t === "light" ? "dark" : "light")),
+-    }),
+-    [theme, mounted],
+-  );
++  // Cambio de tema con fundido rápido (View Transitions): toda la página, incluido el
++  // estanque, pasa de un tema al otro en ~0,35 s en lugar de un salto brusco.
++  // Sin soporte del navegador o con "reducir movimiento", el cambio es instantáneo.
++  const themeValue = useMemo(() => {
++    const toggleTheme = () => {
++      const next = theme === "dark" ? "light" : "dark";
++      const apply = () => {
++        document.documentElement.classList.toggle("dark", next === "dark");
++        flushSync(() => setThemeState(next));
++      };
++      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
++      if (document.startViewTransition && !reduce) document.startViewTransition(apply);
++      else apply();
++    };
++    return { theme, mounted, toggleTheme };
++  }, [theme, mounted]);
+ 
+   return (
+     <LanguageContext.Provider value={langValue}>
+-- 
+2.43.0
+

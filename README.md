@@ -25,3 +25,11 @@ Next solo sirve lo que está en `public/`, así que los recursos viven en `publi
 - `public/media/cv/`: CV descargables (`esp.pdf`, `eng.pdf`). El botón de CV del footer descarga el del idioma activo.
 
 Valores por defecto: inglés y modo oscuro (si el visitante elige otra cosa, se recuerda).
+
+## Datos de GitHub en Projects
+
+Al compilar, `lib/github.js` consulta la API de GitHub y rellena de cada proyecto la versión (última release o tag), la licencia, los temas (topics, que se muestran como etiquetas) y la fecha del último push. Las descripciones siguen escritas a mano en `lib/i18n.js` (ES y EN) porque GitHub solo tiene una.
+
+- Para que aparezca otro proyecto, añade su `repo` (`usuario/nombre`) en `sections.projects.items` de `lib/i18n.js`.
+- Si la API falla, se usan los valores manuales (`version`, `license`, `tags`) de ese mismo archivo.
+- El workflow de Pages se ejecuta cada día a las 00:00 (Madrid) para refrescar estos datos sin necesidad de commits.

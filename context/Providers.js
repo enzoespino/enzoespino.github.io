@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { flushSync } from "react-dom";
 import { translations } from "@/lib/i18n";
 import { readPref, writePref } from "@/lib/storage";
 
@@ -56,14 +57,22 @@ export function Providers({ children }) {
     () => ({ lang, setLang: setLangState, t: translations[lang] }),
     [lang],
   );
-  const themeValue = useMemo(
-    () => ({
-      theme,
-      mounted,
-      toggleTheme: () => setThemeState((t) => (t === "light" ? "dark" : "light")),
-    }),
-    [theme, mounted],
-  );
+  // Cambio de tema con fundido rápido (View Transitions): toda la página, incluido el
+  // estanque, pasa de un tema al otro en ~0,35 s en lugar de un salto brusco.
+  // Sin soporte del navegador o con "reducir movimiento", el cambio es instantáneo.
+  const themeValue = useMemo(() => {
+    const toggleTheme = () => {
+      const next = theme === "dark" ? "light" : "dark";
+      const apply = () => {
+        document.documentElement.classList.toggle("dark", next === "dark");
+        flushSync(() => setThemeState(next));
+      };
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (document.startViewTransition && !reduce) document.startViewTransition(apply);
+      else apply();
+    };
+    return { theme, mounted, toggleTheme };
+  }, [theme, mounted]);
 
   return (
     <LanguageContext.Provider value={langValue}>
